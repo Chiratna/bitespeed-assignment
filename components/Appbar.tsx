@@ -12,8 +12,6 @@ export default function AppBar() {
   const { edges, nodes } = useReactFlowStore(useShallow(selector));
 
   const handleSave = () => {
-    console.log({ edges });
-
     if (nodes.length > 1 && edges.length !== nodes.length - 1) {
       toast.error("Cannot save flow", {
         position: "top-center",

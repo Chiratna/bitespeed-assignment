@@ -8,6 +8,7 @@ import { useShallow } from "zustand/react/shallow";
 import { DndContext, DragEndEvent, closestCenter } from "@dnd-kit/core";
 import AppBar from "@/components/Appbar";
 import { Toaster } from "sonner";
+import { useId } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ const selector = (store: ReactFlowStore) => ({
 
 export default function Home() {
   const { onAddNode } = useReactFlowStore(useShallow(selector));
+  const id = useId();
 
   /**
    * Handler function for the drag end event. It adds a new node to the flow
@@ -31,8 +33,6 @@ export default function Home() {
    * @param {DragEndEvent} event - The drag end event from the DndContext.
    */
   function handleDragEnd(event: DragEndEvent) {
-    console.log(event);
-
     if (event.over)
       onAddNode({
         position: {
@@ -48,7 +48,7 @@ export default function Home() {
       className={`flex flex-col min-h-screen w-screen bg-white ${inter.className}`}
     >
       <AppBar />
-      <DndContext autoScroll={false} onDragEnd={handleDragEnd}>
+      <DndContext id={id} autoScroll={false} onDragEnd={handleDragEnd}>
         <div className="flex w-screen flex-1">
           <ChatBotFlow />
           <SidePanel />
